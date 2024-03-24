@@ -29,8 +29,14 @@ const filterValue = searchParams.get("discount") || "all";
 const sortBy = searchParams.get("sortBy") || "startDate-asc";
 const [field, direction] = sortBy.split("-");
 const modifier = direction === "asc" ? 1 : -1;
-const sortedCabins = filteredCabins.sort((a,b)=> (a[field]-b[field])* modifier) ;
 
+//const sortedCabins = filteredCabins.sort((a,b)=> (a[field]-b[field])* modifier) ;
+// for name sorting which is string we need localeCompare
+const sortedCabins = filteredCabins.sort((a, b) =>
+    typeof a[field] === 'string'
+      ? a[field].localeCompare(b[field]) * modifier
+      : (a[field] - b[field]) * modifier
+  );
 
 
 
